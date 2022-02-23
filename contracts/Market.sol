@@ -10,6 +10,8 @@ contract Market is ReentrancyGuard, Ownable {
     using Counters for Counters.Counter;
 
     Counters.Counter private _tokenIds;
+    // counter for tokens sold
+    Counters.Counter private _soldTokenIds;
 
     // owner of the contract
     address payable marketOwner;
@@ -78,6 +80,23 @@ contract Market is ReentrancyGuard, Ownable {
         idToMarketToken[itemId].sold = true;
 
         marketOwner.transfer(salesFee);
+    }
+
+    function fetchMarketTokens() public view returns(MarketToken[] memory){
+      uint256 itemCount = _tokenIds.current();
+      uint256 unsoldItemCount = _tokenIds.current() - _soldTokenIds.current();
+      uint256 currentIndex = 0;
+
+      MarketToken[] memory items = new MarketToken[](unsoldItemCount);
+      for (uint256 i = 0; i < itemCount; i++) {
+          if(idToMarketToken[i].owner == address(0)) {
+              uint256 currentId = i + 1;
+              MarketToken storage currentItem = idToMarketToken[currentId];
+              items[currentIndex] = currentItem;
+              currentIndex += 1;
+          }
+      }
+      return items;
     }
 
 }
