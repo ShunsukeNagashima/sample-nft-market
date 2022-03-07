@@ -3,9 +3,9 @@ import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import Web3Modal from 'web3modal';
 
-import { nftaddress, nftmarketaddress } from '../../config';
-import Market from '../../artifacts/contracts/Market.sol/Market.json';
-import NFT from '../../artifacts/contracts/NFT.sol/NFT.json';
+import { nftaddress, nftmarketaddress } from '../../../config';
+import Market from '../../../artifacts/contracts/Market.sol/Market.json';
+import NFT from '../../../artifacts/contracts/NFT.sol/NFT.json';
 import { INFT } from './types';
 import { NFTListComponent } from './nft-list';
 

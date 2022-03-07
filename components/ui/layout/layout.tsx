@@ -1,11 +1,12 @@
 import { ReactNode } from 'react';
+import Link from 'next/link';
 import Image from 'next/Image';
 import {
   Box,
   Flex,
   Avatar,
   HStack,
-  Link,
+  Link as ChakraLink,
   IconButton,
   Button,
   Menu,
@@ -19,10 +20,24 @@ import {
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
 
-const Links = ['Explore', 'Create'];
+type Link = {
+  title: string;
+  to: string;
+};
 
-const NavLink = ({ children }: { children: ReactNode }) => (
-  <Link
+const Links: Link[] = [
+  {
+    title: 'Explore',
+    to: '/',
+  },
+  {
+    title: 'Create',
+    to: '/new',
+  },
+];
+
+const NavLink = ({ title, to }: { title: string; to: string }) => (
+  <ChakraLink
     px={2}
     py={1}
     rounded={'md'}
@@ -30,18 +45,18 @@ const NavLink = ({ children }: { children: ReactNode }) => (
       textDecoration: 'none',
       bg: useColorModeValue('gray.200', 'gray.700'),
     }}
-    href={'#'}
+    href={to}
   >
-    {children}
-  </Link>
+    {title}
+  </ChakraLink>
 );
 
-export const Layout: React.FC = () => {
+export const Layout: React.FC = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
-      <Box bg={'#F39766'} px={4}>
+      <Box bg={'brand.primary'} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton
             size={'md'}
@@ -57,8 +72,8 @@ export const Layout: React.FC = () => {
           </HStack>
           <Flex alignItems={'center'}>
             <HStack as={'nav'} spacing={4} mr={4} display={{ base: 'none', md: 'flex' }}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
+              {Links.map((link, i) => (
+                <NavLink key={i} title={link.title} to={link.to} />
               ))}
             </HStack>
             <Menu>
@@ -86,7 +101,7 @@ export const Layout: React.FC = () => {
         ) : null}
       </Box>
 
-      <Box p={4}>Main Content Here</Box>
+      <Box p={4}>{children}</Box>
     </>
   );
 };
