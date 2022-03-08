@@ -1,4 +1,4 @@
-import { Box, Center, useColorModeValue, Heading, Text, Stack } from '@chakra-ui/react';
+import { Box, useColorModeValue, Flex, Button, Divider, HStack } from '@chakra-ui/react';
 import Image from 'next/image';
 import { INFT } from '../nft-list/types';
 
@@ -8,57 +8,43 @@ type Props = {
 
 export const NFTItemComponent: React.FC<Props> = ({ nft }) => {
   return (
-    <Center py={12}>
-      <Box
-        role={'group'}
-        p={6}
-        maxW={'330px'}
-        w={'full'}
-        bg={useColorModeValue('white', 'gray.800')}
-        boxShadow={'2xl'}
-        rounded={'lg'}
-        pos={'relative'}
-        zIndex={1}
-      >
-        <Box
-          rounded={'lg'}
-          mt={-12}
-          pos={'relative'}
-          height={'230px'}
-          _after={{
-            transition: 'all .3s ease',
-            content: '""',
-            w: 'full',
-            h: 'full',
-            pos: 'absolute',
-            top: 5,
-            left: 0,
-            backgroundImage: `url(${nft.image})`,
-            filter: 'blur(15px)',
-            zIndex: -1,
-          }}
-          _groupHover={{
-            _after: {
-              filter: 'blur(20px)',
-            },
-          }}
-        >
-          <Image height={230} width={282} objectFit={'cover'} src={nft.image} alt='pictureOfNft' />
+    <Flex w='full' alignItems='center' justifyContent='center'>
+      <Box bg={useColorModeValue('white', 'gray.800')} maxW='sm' borderWidth='1px' rounded='xl' shadow='lg'>
+        <Image src={nft.image} alt={`Picture of ${nft.name}`} width={320} height={320} />
+
+        <Box px='6' py='3'>
+          <Box d='flex' alignItems='baseline'></Box>
+          <Flex mt='1' justifyContent='space-between' alignContent='center'>
+            <Box fontSize='xl' fontWeight='semibold' as='h4' lineHeight='tight' isTruncated>
+              {nft.name}
+            </Box>
+          </Flex>
+
+          <HStack spacing={6} justifyContent='space-between'>
+            <Box fontSize='sm' color={useColorModeValue('gray.800', 'white')} isTruncated maxW={100}>
+              <Box color={'gray.600'} fontSize='xs'>
+                Seller
+              </Box>
+              {nft.seller}
+            </Box>
+            <Box fontSize='sm' color={useColorModeValue('gray.800', 'white')}>
+              <Box color={'gray.600'} fontSize='xs'>
+                Price
+              </Box>
+              {nft.priceInEther}
+              <Box as='span' color={'gray.600'} fontSize='xs' ml={2}>
+                ETH
+              </Box>
+            </Box>
+          </HStack>
+          <Divider my={2} />
+          <Flex justifyContent='end'>
+            <Button borderRadius='30px' size='xs'>
+              Buy Now
+            </Button>
+          </Flex>
         </Box>
-        <Stack pt={10} align={'center'}>
-          <Text color={'gray.500'} fontSize={'sm'} textTransform={'uppercase'}>
-            {nft.name}
-          </Text>
-          <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
-            {nft.description}
-          </Heading>
-          <Stack direction={'row'} align={'center'}>
-            <Text fontWeight={800} fontSize={'xl'}>
-              {nft.description}
-            </Text>
-          </Stack>
-        </Stack>
       </Box>
-    </Center>
+    </Flex>
   );
 };
