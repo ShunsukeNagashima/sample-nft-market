@@ -99,4 +99,8 @@ contract Market is ReentrancyGuard, Ownable {
       return items;
     }
 
+    function fetchTokenByTokenId(uint256 tokenId) public view returns(MarketToken memory) {
+      return idToMarketToken[tokenId];
+    }
+
 }

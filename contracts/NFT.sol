@@ -45,7 +45,7 @@ contract NFT is ERC721Enumerable, ERC721URIStorage {
     }
 
     function mint(string memory tokenUri) public returns(uint) {
-        uint256 tokenId = totalSupply();
+        uint256 tokenId = totalSupply() + 1;
         _mint(msg.sender, tokenId);
         _setTokenURI(tokenId, tokenUri);
         setApprovalForAll(contractAddress, true);
