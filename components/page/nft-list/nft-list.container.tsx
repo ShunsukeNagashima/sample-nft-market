@@ -25,6 +25,7 @@ export const NFTList = () => {
         const meta = await axios.get(tokenUri);
         const priceInEther = ethers.utils.formatUnits(i.price.toString(), 'ether');
         const item = {
+          itemId: i.itemId.toNumber(),
           tokenId: i.tokenId.toNumber(),
           priceInEther,
           seller: i.seller,
@@ -36,7 +37,6 @@ export const NFTList = () => {
         return item;
       }),
     );
-
     setNfts(items);
   }, []);
 
