@@ -25,6 +25,7 @@ export const ItemDetail = () => {
     const meta = await axios.get(tokenUri);
     const priceInEther = ethers.utils.formatUnits(token.price.toString(), 'ether');
     const item = {
+      itemId: parseInt(token.itemId),
       tokenId: parseInt(tokenId),
       priceInEther,
       seller: token.seller,

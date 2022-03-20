@@ -1,7 +1,9 @@
-import { Box, useColorModeValue, Flex, Button, Divider, HStack } from '@chakra-ui/react';
+import { Box, useColorModeValue, Flex, Button, Divider, HStack, Text } from '@chakra-ui/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { INFT } from '../nft-list/types';
+import { buyMarketItem } from '../../../utils/contractHelper';
+import { ethers } from 'ethers';
 
 type Props = {
   nft: INFT;
@@ -49,9 +51,15 @@ export const NFTItemComponent: React.FC<Props> = ({ nft }) => {
         <Divider />
 
         <Flex justifyContent='end' px='6' py='3'>
-          <Button borderRadius='30px' size='xs'>
-            Buy Now
-          </Button>
+          {nft.owner == ethers.constants.AddressZero ? (
+            <Button onClick={() => buyMarketItem(nft.priceInEther, nft.itemId)} borderRadius='30px' size='xs'>
+              Buy Now
+            </Button>
+          ) : (
+            <Text fontSize='sm' color={'gray.600'}>
+              Owned Item
+            </Text>
+          )}
         </Flex>
       </Box>
     </Flex>
