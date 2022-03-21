@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Center,
   Box,
@@ -18,12 +19,13 @@ import { NFTItem } from '../nft-item';
 
 type Props = {
   ownedNfts: INFT[];
-  ownerAddress: string;
+  walletAddress: string;
 };
 
-export const AccountComponent: React.FC<Props> = ({ ownedNfts, ownerAddress }) => {
+export const AccountComponent: React.FC<Props> = (props) => {
+  const { ownedNfts, walletAddress } = props;
   const tabOptions = ['Collected'];
-  const { hasCopied, onCopy } = useClipboard(ownerAddress);
+  const { hasCopied, onCopy } = useClipboard(walletAddress);
 
   return (
     <Box>
@@ -44,7 +46,7 @@ export const AccountComponent: React.FC<Props> = ({ ownedNfts, ownerAddress }) =
             </Heading>
             <Tooltip label={hasCopied ? 'Copied!' : 'Copy'} placement='top'>
               <Button onClick={onCopy} borderColor={'gray.600'} border={'2px'} borderRadius={'30px'} bg={'white'}>
-                {`${ownerAddress.slice(0, 6)}...${ownerAddress.slice(-4)}`}
+                {`${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`}
               </Button>
             </Tooltip>
           </Stack>
