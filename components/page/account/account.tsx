@@ -63,7 +63,7 @@ export const AccountComponent: React.FC<Props> = (props) => {
         </TabList>
 
         <TabPanels>
-          <TabPanel justifyContent={'start'}>
+          <TabPanel display={'flex'} gap={4}>
             {ownedNfts.map((nft) => {
               return <NFTItem key={nft.tokenId} nft={nft} />;
             })}

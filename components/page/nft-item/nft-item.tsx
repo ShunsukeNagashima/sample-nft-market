@@ -12,7 +12,7 @@ type Props = {
 
 export const NFTItemComponent: React.FC<Props> = ({ nft }) => {
   return (
-    <Flex w='full' alignItems='center' justifyContent='start'>
+    <Flex alignItems='center' justifyContent='start'>
       <Box bg={useColorModeValue('white', 'gray.800')} maxW='sm' borderWidth='1px' rounded='xl' shadow='lg'>
         <Link href={`/assets/${nft.tokenId}`}>
           <a>
