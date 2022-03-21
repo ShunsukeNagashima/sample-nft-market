@@ -77,7 +77,7 @@ export const fetchOwnTokens = async () => {
 
 }
 
-export const getOwnerAddress = async () => {
+export const getWalletAddress = async () => {
   const web3Modal = new Web3Modal();
   const connection = await web3Modal.connect();
   const provider = new ethers.providers.Web3Provider(connection);

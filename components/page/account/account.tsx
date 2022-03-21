@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Center,
   Box,
@@ -18,12 +19,19 @@ import { NFTItem } from '../nft-item';
 
 type Props = {
   ownedNfts: INFT[];
-  ownerAddress: string;
+  walletAddress: string;
+  onSaleNfts: INFT[];
 };
 
-export const AccountComponent: React.FC<Props> = ({ ownedNfts, ownerAddress }) => {
-  const tabOptions = ['Collected'];
-  const { hasCopied, onCopy } = useClipboard(ownerAddress);
+export const AccountComponent: React.FC<Props> = (props) => {
+  const { ownedNfts, walletAddress, onSaleNfts } = props;
+  const tabOptions = ['Collected', 'On Sale'];
+  const { hasCopied, onCopy } = useClipboard(walletAddress);
+  const [tabIndex, setTabIndex] = useState(0);
+
+  const handleTabsChange = (index: number) => {
+    setTabIndex(index);
+  };
 
   return (
     <Box>
@@ -44,14 +52,14 @@ export const AccountComponent: React.FC<Props> = ({ ownedNfts, ownerAddress }) =
             </Heading>
             <Tooltip label={hasCopied ? 'Copied!' : 'Copy'} placement='top'>
               <Button onClick={onCopy} borderColor={'gray.600'} border={'2px'} borderRadius={'30px'} bg={'white'}>
-                {`${ownerAddress.slice(0, 6)}...${ownerAddress.slice(-4)}`}
+                {`${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`}
               </Button>
             </Tooltip>
           </Stack>
         </Box>
       </Center>
 
-      <Tabs size='lg'>
+      <Tabs size='lg' index={tabIndex} onChange={handleTabsChange}>
         <TabList px='12'>
           {tabOptions.map((tab, i) => (
             <Tab px='12' key={i}>
@@ -61,8 +69,14 @@ export const AccountComponent: React.FC<Props> = ({ ownedNfts, ownerAddress }) =
         </TabList>
 
         <TabPanels>
-          <TabPanel justifyContent={'start'}>
+          <TabPanel display={'flex'} gap={4}>
             {ownedNfts.map((nft) => {
+              return <NFTItem key={nft.tokenId} nft={nft} />;
+            })}
+          </TabPanel>
+
+          <TabPanel display={'flex'} gap={4}>
+            {onSaleNfts.map((nft) => {
               return <NFTItem key={nft.tokenId} nft={nft} />;
             })}
           </TabPanel>
