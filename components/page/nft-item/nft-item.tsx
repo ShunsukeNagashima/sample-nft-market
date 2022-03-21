@@ -1,9 +1,10 @@
 import { Box, useColorModeValue, Flex, Button, Divider, HStack, Text } from '@chakra-ui/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ethers } from 'ethers';
+
 import { INFT } from '../nft-list/types';
 import { buyMarketItem } from '../../../utils/contractHelper';
-import { ethers } from 'ethers';
 
 type Props = {
   nft: INFT;
@@ -11,7 +12,7 @@ type Props = {
 
 export const NFTItemComponent: React.FC<Props> = ({ nft }) => {
   return (
-    <Flex w='full' alignItems='center' justifyContent='center'>
+    <Flex w='full' alignItems='center' justifyContent='start'>
       <Box bg={useColorModeValue('white', 'gray.800')} maxW='sm' borderWidth='1px' rounded='xl' shadow='lg'>
         <Link href={`/assets/${nft.tokenId}`}>
           <a>

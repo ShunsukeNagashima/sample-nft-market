@@ -76,17 +76,11 @@ export const Layout: React.FC = ({ children }) => {
                 <NavLink key={i} title={link.title} to={link.to} />
               ))}
             </HStack>
-            <Menu>
-              <MenuButton as={Button} rounded={'full'} variant={'link'} cursor={'pointer'} minW={0}>
+            <Link href='/account'>
+              <a>
                 <Avatar size={'sm'} />
-              </MenuButton>
-              <MenuList>
-                <MenuItem>Link 1</MenuItem>
-                <MenuItem>Link 2</MenuItem>
-                <MenuDivider />
-                <MenuItem>Link 3</MenuItem>
-              </MenuList>
-            </Menu>
+              </a>
+            </Link>
           </Flex>
         </Flex>
 
