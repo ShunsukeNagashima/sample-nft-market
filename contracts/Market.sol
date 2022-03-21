@@ -46,6 +46,10 @@ contract Market is ReentrancyGuard, Ownable {
         marketOwner = payable(msg.sender);
     }
 
+    function getItemCount() public view returns(uint256) {
+      return _tokenIds.current();
+    }
+
     function makeMarketItem(address nftContract, uint256 tokenId, uint256 price) public nonReentrant {
         _tokenIds.increment();
         uint256 itemId = _tokenIds.current();
@@ -82,22 +86,6 @@ contract Market is ReentrancyGuard, Ownable {
         marketOwner.transfer(salesFee);
     }
 
-    function fetchMarketTokens() public view returns(MarketToken[] memory){
-      uint256 itemCount = _tokenIds.current();
-      uint256 unsoldItemCount = _tokenIds.current() - _soldTokenIds.current();
-      uint256 currentIndex = 0;
-
-      MarketToken[] memory items = new MarketToken[](unsoldItemCount);
-      for (uint256 i = 0; i < itemCount; i++) {
-          if(idToMarketToken[i].owner == address(0)) {
-              uint256 currentId = i + 1;
-              MarketToken storage currentItem = idToMarketToken[currentId];
-              items[currentIndex] = currentItem;
-              currentIndex += 1;
-          }
-      }
-      return items;
-    }
 
     function fetchTokenByTokenId(uint256 tokenId) public view returns(MarketToken memory) {
       return idToMarketToken[tokenId];
