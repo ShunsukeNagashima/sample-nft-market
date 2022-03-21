@@ -20,12 +20,18 @@ import { NFTItem } from '../nft-item';
 type Props = {
   ownedNfts: INFT[];
   walletAddress: string;
+  onSaleNfts: INFT[];
 };
 
 export const AccountComponent: React.FC<Props> = (props) => {
-  const { ownedNfts, walletAddress } = props;
-  const tabOptions = ['Collected'];
+  const { ownedNfts, walletAddress, onSaleNfts } = props;
+  const tabOptions = ['Collected', 'On Sale'];
   const { hasCopied, onCopy } = useClipboard(walletAddress);
+  const [tabIndex, setTabIndex] = useState(0);
+
+  const handleTabsChange = (index: number) => {
+    setTabIndex(index);
+  };
 
   return (
     <Box>
@@ -53,7 +59,7 @@ export const AccountComponent: React.FC<Props> = (props) => {
         </Box>
       </Center>
 
-      <Tabs size='lg'>
+      <Tabs size='lg' index={tabIndex} onChange={handleTabsChange}>
         <TabList px='12'>
           {tabOptions.map((tab, i) => (
             <Tab px='12' key={i}>
@@ -65,6 +71,12 @@ export const AccountComponent: React.FC<Props> = (props) => {
         <TabPanels>
           <TabPanel display={'flex'} gap={4}>
             {ownedNfts.map((nft) => {
+              return <NFTItem key={nft.tokenId} nft={nft} />;
+            })}
+          </TabPanel>
+
+          <TabPanel display={'flex'} gap={4}>
+            {onSaleNfts.map((nft) => {
               return <NFTItem key={nft.tokenId} nft={nft} />;
             })}
           </TabPanel>
