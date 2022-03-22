@@ -17,6 +17,7 @@
     "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@nomiclabs/hardhat-waffle": "^2.0.2",
     "@openzeppelin/contracts": "^4.5.0",
+    "@walletconnect/web3-provider": "^1.7.5",
     "axios": "^0.26.0",
     "chai": "^4.3.6",
     "dotenv": "^16.0.0",
@@ -30,6 +31,8 @@
     "react-dom": "17.0.2",
     "react-hook-form": "^7.27.1",
     "react-icons": "^4.3.1",
+    "unstated-next": "^1.1.0",
+    "web3": "^1.7.1",
     "web3modal": "^1.9.5"
   },
   "devDependencies": {
