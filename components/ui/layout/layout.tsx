@@ -19,6 +19,8 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
+import { MdOutlineAccountBalanceWallet } from 'react-icons/md';
+import { Web3Container } from '../../../container/web3-contaner';
 
 type Link = {
   title: string;
@@ -53,6 +55,8 @@ const NavLink = ({ title, to }: { title: string; to: string }) => (
 
 export const Layout: React.FC = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { connectWallet, account, disconnect } = Web3Container.useContainer();
+  console.log(account);
 
   return (
     <>
@@ -76,11 +80,25 @@ export const Layout: React.FC = ({ children }) => {
                 <NavLink key={i} title={link.title} to={link.to} />
               ))}
             </HStack>
-            <Link href='/account'>
-              <a>
-                <Avatar size={'sm'} />
-              </a>
-            </Link>
+            {account ? (
+              <Menu>
+                <MenuButton as={Button} rounded={'full'} variant={'link'} cursor={'pointer'} minW={0}>
+                  <Avatar size={'sm'} />
+                </MenuButton>
+                <MenuList>
+                  <MenuItem>
+                    <Link href='/account'>
+                      <a style={{ width: '100%' }}>Account</a>
+                    </Link>
+                  </MenuItem>
+                  <MenuItem onClick={disconnect}>Disconnect</MenuItem>
+                </MenuList>
+              </Menu>
+            ) : (
+              <Button bg={'brand.primary'} onClick={connectWallet}>
+                <MdOutlineAccountBalanceWallet />
+              </Button>
+            )}
           </Flex>
         </Flex>
 
